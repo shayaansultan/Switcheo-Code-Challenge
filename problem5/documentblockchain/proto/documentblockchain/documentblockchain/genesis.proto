@@ -1,0 +1,17 @@
+syntax = "proto3";
+package documentblockchain.documentblockchain;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "documentblockchain/documentblockchain/params.proto";
+
+option go_package = "documentblockchain/x/documentblockchain/types";
+
+// GenesisState defines the documentblockchain module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
