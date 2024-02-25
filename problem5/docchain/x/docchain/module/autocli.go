@@ -17,6 +17,17 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:       "params",
 					Short:     "Shows the parameters of the module",
 				},
+				{
+					RpcMethod: "DocumentAll",
+					Use:       "list-document",
+					Short:     "List all document",
+				},
+				{
+					RpcMethod:      "Document",
+					Use:            "show-document [id]",
+					Short:          "Shows a document by id",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+				},
 				// this line is used by ignite scaffolding # autocli/query
 			},
 		},
@@ -27,6 +38,24 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 				{
 					RpcMethod: "UpdateParams",
 					Skip:      true, // skipped because authority gated
+				},
+				{
+					RpcMethod:      "CreateDocument",
+					Use:            "create-document [title] [body]",
+					Short:          "Create document",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "title"}, {ProtoField: "body"}},
+				},
+				{
+					RpcMethod:      "UpdateDocument",
+					Use:            "update-document [id] [title] [body]",
+					Short:          "Update document",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}, {ProtoField: "title"}, {ProtoField: "body"}},
+				},
+				{
+					RpcMethod:      "DeleteDocument",
+					Use:            "delete-document [id]",
+					Short:          "Delete document",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
 				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},

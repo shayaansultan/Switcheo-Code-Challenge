@@ -1,0 +1,11 @@
+syntax = "proto3";
+package docchain.docchain;
+
+option go_package = "docchain/x/docchain/types";
+
+message Document {
+  uint64 id = 1;
+  string title = 2; 
+  string body = 3; 
+  string creator = 4;
+}
