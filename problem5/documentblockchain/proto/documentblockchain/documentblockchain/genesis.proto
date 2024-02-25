@@ -1,17 +1,20 @@
 syntax = "proto3";
+
 package documentblockchain.documentblockchain;
 
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "documentblockchain/documentblockchain/params.proto";
+import "documentblockchain/documentblockchain/document.proto";
 
 option go_package = "documentblockchain/x/documentblockchain/types";
 
 // GenesisState defines the documentblockchain module's genesis state.
 message GenesisState {
+  
   // params defines all the parameters of the module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+           Params   params        = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated Document documentList  = 2 [(gogoproto.nullable) = false] ;
+           uint64   documentCount = 3;
 }
+

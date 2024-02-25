@@ -20,7 +20,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Msg_UpdateParams_FullMethodName = "/documentblockchain.documentblockchain.Msg/UpdateParams"
+	Msg_UpdateParams_FullMethodName   = "/documentblockchain.documentblockchain.Msg/UpdateParams"
+	Msg_CreateDocument_FullMethodName = "/documentblockchain.documentblockchain.Msg/CreateDocument"
+	Msg_UpdateDocument_FullMethodName = "/documentblockchain.documentblockchain.Msg/UpdateDocument"
+	Msg_DeleteDocument_FullMethodName = "/documentblockchain.documentblockchain.Msg/DeleteDocument"
 )
 
 // MsgClient is the client API for Msg service.
@@ -30,6 +33,9 @@ type MsgClient interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
+	CreateDocument(ctx context.Context, in *MsgCreateDocument, opts ...grpc.CallOption) (*MsgCreateDocumentResponse, error)
+	UpdateDocument(ctx context.Context, in *MsgUpdateDocument, opts ...grpc.CallOption) (*MsgUpdateDocumentResponse, error)
+	DeleteDocument(ctx context.Context, in *MsgDeleteDocument, opts ...grpc.CallOption) (*MsgDeleteDocumentResponse, error)
 }
 
 type msgClient struct {
@@ -49,6 +55,33 @@ func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts 
 	return out, nil
 }
 
+func (c *msgClient) CreateDocument(ctx context.Context, in *MsgCreateDocument, opts ...grpc.CallOption) (*MsgCreateDocumentResponse, error) {
+	out := new(MsgCreateDocumentResponse)
+	err := c.cc.Invoke(ctx, Msg_CreateDocument_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateDocument(ctx context.Context, in *MsgUpdateDocument, opts ...grpc.CallOption) (*MsgUpdateDocumentResponse, error) {
+	out := new(MsgUpdateDocumentResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateDocument_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteDocument(ctx context.Context, in *MsgDeleteDocument, opts ...grpc.CallOption) (*MsgDeleteDocumentResponse, error) {
+	out := new(MsgDeleteDocumentResponse)
+	err := c.cc.Invoke(ctx, Msg_DeleteDocument_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -56,6 +89,9 @@ type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
+	CreateDocument(context.Context, *MsgCreateDocument) (*MsgCreateDocumentResponse, error)
+	UpdateDocument(context.Context, *MsgUpdateDocument) (*MsgUpdateDocumentResponse, error)
+	DeleteDocument(context.Context, *MsgDeleteDocument) (*MsgDeleteDocumentResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -65,6 +101,15 @@ type UnimplementedMsgServer struct {
 
 func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
+}
+func (UnimplementedMsgServer) CreateDocument(context.Context, *MsgCreateDocument) (*MsgCreateDocumentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateDocument not implemented")
+}
+func (UnimplementedMsgServer) UpdateDocument(context.Context, *MsgUpdateDocument) (*MsgUpdateDocumentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateDocument not implemented")
+}
+func (UnimplementedMsgServer) DeleteDocument(context.Context, *MsgDeleteDocument) (*MsgDeleteDocumentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDocument not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -97,6 +142,60 @@ func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateDocument)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateDocument(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CreateDocument_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateDocument(ctx, req.(*MsgCreateDocument))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateDocument)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateDocument(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateDocument_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateDocument(ctx, req.(*MsgUpdateDocument))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteDocument)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteDocument(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_DeleteDocument_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteDocument(ctx, req.(*MsgDeleteDocument))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -107,6 +206,18 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateParams",
 			Handler:    _Msg_UpdateParams_Handler,
+		},
+		{
+			MethodName: "CreateDocument",
+			Handler:    _Msg_CreateDocument_Handler,
+		},
+		{
+			MethodName: "UpdateDocument",
+			Handler:    _Msg_UpdateDocument_Handler,
+		},
+		{
+			MethodName: "DeleteDocument",
+			Handler:    _Msg_DeleteDocument_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
