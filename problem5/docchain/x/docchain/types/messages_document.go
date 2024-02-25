@@ -8,11 +8,12 @@ import (
 
 var _ sdk.Msg = &MsgCreateDocument{}
 
-func NewMsgCreateDocument(creator string, title string, body string) *MsgCreateDocument {
+func NewMsgCreateDocument(creator string, title string, body string, category string) *MsgCreateDocument {
 	return &MsgCreateDocument{
 		Creator: creator,
 		Title:   title,
 		Body:    body,
+		Category: category,
 	}
 }
 
@@ -26,12 +27,13 @@ func (msg *MsgCreateDocument) ValidateBasic() error {
 
 var _ sdk.Msg = &MsgUpdateDocument{}
 
-func NewMsgUpdateDocument(creator string, id uint64, title string, body string) *MsgUpdateDocument {
+func NewMsgUpdateDocument(creator string, id uint64, title string, body string, category string) *MsgUpdateDocument {
 	return &MsgUpdateDocument{
 		Id:      id,
 		Creator: creator,
 		Title:   title,
 		Body:    body,
+		Category: category,
 	}
 }
 

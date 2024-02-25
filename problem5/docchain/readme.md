@@ -1,51 +1,15 @@
-# docchain
-**docchain** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli).
+# Consensus-Breaking Change
 
-## Get started
+## What is a Consensus-Breaking Change?
 
-```
-ignite chain serve
-```
+In a blockchain network, consensus is the agreement among nodes about the state of the blockchain. All nodes in the network follow a set of rules to validate transactions, create blocks, and update the state of the blockchain. When these rules are changed in a way that is not backwards-compatible, it's called a consensus-breaking change.
 
-`serve` command installs dependencies, builds, initializes, and starts your blockchain in development.
+A consensus-breaking change can cause nodes in the network to disagree about the state of the blockchain. For example, some nodes might consider a transaction valid according to the new rules, while others might consider the same transaction invalid according to the old rules. This disagreement can lead to a fork in the blockchain, with different nodes maintaining different versions of the blockchain's history.
 
-### Configure
+## Why Does Our Change Break Consensus?
 
-Your blockchain in development can be configured with `config.yml`. To learn more, see the [Ignite CLI docs](https://docs.ignite.com).
+In our case, we have introduced a new field, `category`, to the `document` type in our blockchain application. Previously, a `document` only required a `title` and a `body`. Now, each `document` must also include a `category`.
 
-### Web Frontend
+This change breaks consensus because it alters the rules for validating transactions. Nodes running the old version of the software will reject transactions that include the `category` field because these transactions do not conform to the old rules. On the other hand, nodes running the new version of the software will reject transactions that do not include the `category` field because these transactions do not conform to the new rules.
 
-Additionally, Ignite CLI offers both Vue and React options for frontend scaffolding:
-
-For a Vue frontend, use: `ignite scaffold vue`
-For a React frontend, use: `ignite scaffold react`
-These commands can be run within your scaffolded blockchain project. 
-
-
-For more information see the [monorepo for Ignite front-end development](https://github.com/ignite/web).
-
-## Release
-To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
-
-```
-git tag v0.1
-git push origin v0.1
-```
-
-After a draft release is created, make your final changes from the release page and publish it.
-
-### Install
-To install the latest version of your blockchain node's binary, execute the following command on your machine:
-
-```
-curl https://get.ignite.com/username/docchain@latest! | sudo bash
-```
-`username/docchain` should match the `username` and `repo_name` of the Github repository to which the source code was pushed. Learn more about [the install process](https://github.com/allinbits/starport-installer).
-
-## Learn more
-
-- [Ignite CLI](https://ignite.com/cli)
-- [Tutorials](https://docs.ignite.com/guide)
-- [Ignite CLI docs](https://docs.ignite.com)
-- [Cosmos SDK docs](https://docs.cosmos.network)
-- [Developer Chat](https://discord.gg/ignite)
+As a result, the network can split into two: one group of nodes that follows the old rules and another group that follows the new rules. This is why adding the `category` field to the `document` type is a consensus-breaking change.

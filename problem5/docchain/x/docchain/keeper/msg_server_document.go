@@ -18,6 +18,7 @@ func (k msgServer) CreateDocument(goCtx context.Context, msg *types.MsgCreateDoc
 		Creator: msg.Creator,
 		Title:   msg.Title,
 		Body:    msg.Body,
+		Category: msg.Category,
 	}
 
 	id := k.AppendDocument(
@@ -38,6 +39,7 @@ func (k msgServer) UpdateDocument(goCtx context.Context, msg *types.MsgUpdateDoc
 		Id:      msg.Id,
 		Title:   msg.Title,
 		Body:    msg.Body,
+		Category: msg.Category,
 	}
 
 	// Checks that the element exists

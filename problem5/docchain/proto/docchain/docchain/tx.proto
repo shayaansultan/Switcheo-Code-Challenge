@@ -45,6 +45,7 @@ message MsgCreateDocument {
   string creator = 1;
   string title   = 2;
   string body    = 3;
+  string category = 4;
 }
 
 message MsgCreateDocumentResponse {
@@ -57,6 +58,7 @@ message MsgUpdateDocument {
   uint64 id      = 2;
   string title   = 3;
   string body    = 4;
+  string category = 5;
 }
 
 message MsgUpdateDocumentResponse {}
