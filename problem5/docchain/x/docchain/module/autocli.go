@@ -28,6 +28,13 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Short:          "Shows a document by id",
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
 				},
+				{
+					RpcMethod:      "SearchTitle",
+					Use:            "search-title [word]",
+					Short:          "Query search-title",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "word"}},
+				},
+
 				// this line is used by ignite scaffolding # autocli/query
 			},
 		},

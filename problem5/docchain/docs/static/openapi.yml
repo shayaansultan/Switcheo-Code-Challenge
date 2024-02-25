@@ -9195,6 +9195,188 @@ paths:
               Since: cosmos-sdk 0.47
       tags:
         - Msg
+  /docchain.docchain.Msg/CreateDocument:
+    post:
+      operationId: DocchainDocchainMsg_CreateDocument
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              creator:
+                type: string
+              title:
+                type: string
+              body:
+                type: string
+      tags:
+        - Msg
+  /docchain.docchain.Msg/DeleteDocument:
+    post:
+      operationId: DocchainDocchainMsg_DeleteDocument
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              creator:
+                type: string
+              id:
+                type: string
+                format: uint64
+      tags:
+        - Msg
+  /docchain.docchain.Msg/UpdateDocument:
+    post:
+      operationId: DocchainDocchainMsg_UpdateDocument
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              creator:
+                type: string
+              id:
+                type: string
+                format: uint64
+              title:
+                type: string
+              body:
+                type: string
+      tags:
+        - Msg
+  /docchain.docchain.Msg/UpdateParams:
+    post:
+      summary: |-
+        UpdateParams defines a (governance) operation for updating the module
+        parameters. The authority defaults to the x/gov module account.
+      operationId: DocchainDocchainMsg_UpdateParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            description: >-
+              MsgUpdateParamsResponse defines the response structure for
+              executing a
+
+              MsgUpdateParams message.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: body
+          description: MsgUpdateParams is the Msg/UpdateParams request type.
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              authority:
+                type: string
+                description: >-
+                  authority is the address that controls the module (defaults to
+                  x/gov unless overwritten).
+              params:
+                description: 'NOTE: All parameters must be supplied.'
+                type: object
+            description: MsgUpdateParams is the Msg/UpdateParams request type.
+      tags:
+        - Msg
   /docchain/docchain/document:
     get:
       operationId: DocchainDocchainQuery_DocumentAll
@@ -9407,18 +9589,30 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /docchain.docchain.Msg/CreateDocument:
-    post:
-      operationId: DocchainDocchainMsg_CreateDocument
+  /docchain/docchain/search_title/{word}:
+    get:
+      summary: Queries a list of SearchTitle items.
+      operationId: DocchainDocchainQuery_SearchTitle
       responses:
         '200':
           description: A successful response.
           schema:
             type: object
             properties:
-              id:
-                type: string
-                format: uint64
+              document:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    title:
+                      type: string
+                    body:
+                      type: string
+                    creator:
+                      type: string
         default:
           description: An unexpected error response.
           schema:
@@ -9438,157 +9632,12 @@ paths:
                       type: string
                   additionalProperties: {}
       parameters:
-        - name: body
-          in: body
+        - name: word
+          in: path
           required: true
-          schema:
-            type: object
-            properties:
-              creator:
-                type: string
-              title:
-                type: string
-              body:
-                type: string
+          type: string
       tags:
-        - Msg
-  /docchain.docchain.Msg/DeleteDocument:
-    post:
-      operationId: DocchainDocchainMsg_DeleteDocument
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      parameters:
-        - name: body
-          in: body
-          required: true
-          schema:
-            type: object
-            properties:
-              creator:
-                type: string
-              id:
-                type: string
-                format: uint64
-      tags:
-        - Msg
-  /docchain.docchain.Msg/UpdateDocument:
-    post:
-      operationId: DocchainDocchainMsg_UpdateDocument
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      parameters:
-        - name: body
-          in: body
-          required: true
-          schema:
-            type: object
-            properties:
-              creator:
-                type: string
-              id:
-                type: string
-                format: uint64
-              title:
-                type: string
-              body:
-                type: string
-      tags:
-        - Msg
-  /docchain.docchain.Msg/UpdateParams:
-    post:
-      summary: |-
-        UpdateParams defines a (governance) operation for updating the module
-        parameters. The authority defaults to the x/gov module account.
-      operationId: DocchainDocchainMsg_UpdateParams
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            description: >-
-              MsgUpdateParamsResponse defines the response structure for
-              executing a
-
-              MsgUpdateParams message.
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      parameters:
-        - name: body
-          description: MsgUpdateParams is the Msg/UpdateParams request type.
-          in: body
-          required: true
-          schema:
-            type: object
-            properties:
-              authority:
-                type: string
-                description: >-
-                  authority is the address that controls the module (defaults to
-                  x/gov unless overwritten).
-              params:
-                description: 'NOTE: All parameters must be supplied.'
-                type: object
-            description: MsgUpdateParams is the Msg/UpdateParams request type.
-      tags:
-        - Msg
+        - Query
   /ibc.applications.fee.v1.Msg/PayPacketFee:
     post:
       summary: >-
@@ -23387,6 +23436,65 @@ definitions:
           min_commission_rate is the chain-wide minimum commission rate that a
           validator can charge their delegators
     description: Params defines the parameters for the x/staking module.
+  docchain.docchain.MsgCreateDocument:
+    type: object
+    properties:
+      creator:
+        type: string
+      title:
+        type: string
+      body:
+        type: string
+  docchain.docchain.MsgCreateDocumentResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+  docchain.docchain.MsgDeleteDocument:
+    type: object
+    properties:
+      creator:
+        type: string
+      id:
+        type: string
+        format: uint64
+  docchain.docchain.MsgDeleteDocumentResponse:
+    type: object
+  docchain.docchain.MsgUpdateDocument:
+    type: object
+    properties:
+      creator:
+        type: string
+      id:
+        type: string
+        format: uint64
+      title:
+        type: string
+      body:
+        type: string
+  docchain.docchain.MsgUpdateDocumentResponse:
+    type: object
+  docchain.docchain.MsgUpdateParams:
+    type: object
+    properties:
+      authority:
+        type: string
+        description: >-
+          authority is the address that controls the module (defaults to x/gov
+          unless overwritten).
+      params:
+        description: 'NOTE: All parameters must be supplied.'
+        type: object
+    description: MsgUpdateParams is the Msg/UpdateParams request type.
+  docchain.docchain.MsgUpdateParamsResponse:
+    type: object
+    description: |-
+      MsgUpdateParamsResponse defines the response structure for executing a
+      MsgUpdateParams message.
+  docchain.docchain.Params:
+    type: object
+    description: Params defines the parameters for the module.
   cosmos.base.query.v1beta1.PageRequest:
     type: object
     properties:
@@ -23476,9 +23584,6 @@ definitions:
         type: string
       creator:
         type: string
-  docchain.docchain.Params:
-    type: object
-    description: Params defines the parameters for the module.
   docchain.docchain.QueryAllDocumentResponse:
     type: object
     properties:
@@ -23544,62 +23649,23 @@ definitions:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
-  docchain.docchain.MsgCreateDocument:
+  docchain.docchain.QuerySearchTitleResponse:
     type: object
     properties:
-      creator:
-        type: string
-      title:
-        type: string
-      body:
-        type: string
-  docchain.docchain.MsgCreateDocumentResponse:
-    type: object
-    properties:
-      id:
-        type: string
-        format: uint64
-  docchain.docchain.MsgDeleteDocument:
-    type: object
-    properties:
-      creator:
-        type: string
-      id:
-        type: string
-        format: uint64
-  docchain.docchain.MsgDeleteDocumentResponse:
-    type: object
-  docchain.docchain.MsgUpdateDocument:
-    type: object
-    properties:
-      creator:
-        type: string
-      id:
-        type: string
-        format: uint64
-      title:
-        type: string
-      body:
-        type: string
-  docchain.docchain.MsgUpdateDocumentResponse:
-    type: object
-  docchain.docchain.MsgUpdateParams:
-    type: object
-    properties:
-      authority:
-        type: string
-        description: >-
-          authority is the address that controls the module (defaults to x/gov
-          unless overwritten).
-      params:
-        description: 'NOTE: All parameters must be supplied.'
-        type: object
-    description: MsgUpdateParams is the Msg/UpdateParams request type.
-  docchain.docchain.MsgUpdateParamsResponse:
-    type: object
-    description: |-
-      MsgUpdateParamsResponse defines the response structure for executing a
-      MsgUpdateParams message.
+      document:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            title:
+              type: string
+            body:
+              type: string
+            creator:
+              type: string
   ibc.applications.fee.v1.Fee:
     type: object
     properties:

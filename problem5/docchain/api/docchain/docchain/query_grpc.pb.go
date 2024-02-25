@@ -22,6 +22,7 @@ const (
 	Query_Params_FullMethodName      = "/docchain.docchain.Query/Params"
 	Query_Document_FullMethodName    = "/docchain.docchain.Query/Document"
 	Query_DocumentAll_FullMethodName = "/docchain.docchain.Query/DocumentAll"
+	Query_SearchTitle_FullMethodName = "/docchain.docchain.Query/SearchTitle"
 )
 
 // QueryClient is the client API for Query service.
@@ -33,6 +34,8 @@ type QueryClient interface {
 	// Queries a list of Document items.
 	Document(ctx context.Context, in *QueryGetDocumentRequest, opts ...grpc.CallOption) (*QueryGetDocumentResponse, error)
 	DocumentAll(ctx context.Context, in *QueryAllDocumentRequest, opts ...grpc.CallOption) (*QueryAllDocumentResponse, error)
+	// Queries a list of SearchTitle items.
+	SearchTitle(ctx context.Context, in *QuerySearchTitleRequest, opts ...grpc.CallOption) (*QuerySearchTitleResponse, error)
 }
 
 type queryClient struct {
@@ -70,6 +73,15 @@ func (c *queryClient) DocumentAll(ctx context.Context, in *QueryAllDocumentReque
 	return out, nil
 }
 
+func (c *queryClient) SearchTitle(ctx context.Context, in *QuerySearchTitleRequest, opts ...grpc.CallOption) (*QuerySearchTitleResponse, error) {
+	out := new(QuerySearchTitleResponse)
+	err := c.cc.Invoke(ctx, Query_SearchTitle_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
@@ -79,6 +91,8 @@ type QueryServer interface {
 	// Queries a list of Document items.
 	Document(context.Context, *QueryGetDocumentRequest) (*QueryGetDocumentResponse, error)
 	DocumentAll(context.Context, *QueryAllDocumentRequest) (*QueryAllDocumentResponse, error)
+	// Queries a list of SearchTitle items.
+	SearchTitle(context.Context, *QuerySearchTitleRequest) (*QuerySearchTitleResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -94,6 +108,9 @@ func (UnimplementedQueryServer) Document(context.Context, *QueryGetDocumentReque
 }
 func (UnimplementedQueryServer) DocumentAll(context.Context, *QueryAllDocumentRequest) (*QueryAllDocumentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DocumentAll not implemented")
+}
+func (UnimplementedQueryServer) SearchTitle(context.Context, *QuerySearchTitleRequest) (*QuerySearchTitleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchTitle not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -162,6 +179,24 @@ func _Query_DocumentAll_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_SearchTitle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QuerySearchTitleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).SearchTitle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_SearchTitle_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).SearchTitle(ctx, req.(*QuerySearchTitleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -180,6 +215,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DocumentAll",
 			Handler:    _Query_DocumentAll_Handler,
+		},
+		{
+			MethodName: "SearchTitle",
+			Handler:    _Query_SearchTitle_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

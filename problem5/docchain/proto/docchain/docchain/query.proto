@@ -29,6 +29,12 @@ service Query {
     option (google.api.http).get = "/docchain/docchain/document";
   
   }
+  
+  // Queries a list of SearchTitle items.
+  rpc SearchTitle (QuerySearchTitleRequest) returns (QuerySearchTitleResponse) {
+    option (google.api.http).get = "/docchain/docchain/search_title/{word}";
+  
+  }
 }
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
@@ -55,5 +61,13 @@ message QueryAllDocumentRequest {
 message QueryAllDocumentResponse {
   repeated Document                               Document   = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QuerySearchTitleRequest {
+  string word = 1;
+}
+
+message QuerySearchTitleResponse {
+  repeated Document document = 1;
 }
 
